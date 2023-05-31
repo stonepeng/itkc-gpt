@@ -486,15 +486,26 @@ export function Chat() {
   };
 
   const doSubmit = (userInput: string) => {
-    if (userInput.trim() === "") return;
-    setIsLoading(true);
+    if (userInput.trim() === "") return
+    setIsLoading(true)
+
+    // 发送 AJAX 请求
+    fetch('https://apiv2.itos.cn/api/basic/chatgpt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userInput })
+    })
+  .then(() => {
     chatStore.onUserInput(userInput).then(() => setIsLoading(false));
-    localStorage.setItem(LAST_INPUT_KEY, userInput);
-    setUserInput("");
-    setPromptHints([]);
-    if (!isMobileScreen) inputRef.current?.focus();
-    setAutoScroll(true);
-  };
+    localStorage.setItem(LAST_INPUT_KEY, userInput)
+    setUserInput("")
+    setPromptHints([])
+    if (!isMobileScreen) inputRef.current?.focus()
+    setAutoScroll(true)
+   })
+  }
 
   // stop response
   const onUserStop = (messageId: number) => {
