@@ -495,7 +495,10 @@ export function Chat() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ userInput })
+      body: JSON.stringify({
+        'input': userInput,
+        'code': JSON.parse(localStorage.getItem('access-control')!).state.accessCode
+      })
     })
   .then(() => {
     chatStore.onUserInput(userInput).then(() => setIsLoading(false));
