@@ -24,6 +24,9 @@ import {
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
 
+import { LoginModal } from "./pop-login";
+import { useAccessStore } from "../store";
+
 export function Loading(props: { noLogo?: boolean }) {
   return (
     <div className={styles["loading-content"] + " no-dark"}>
@@ -136,11 +139,14 @@ function Screen() {
 
 export function Home() {
   useSwitchTheme();
-
+  const [showLogin, setShowLogin] = useState(false);
+  const accessStore = useAccessStore();
   if (!useHasHydrated()) {
     return <Loading />;
   }
-
+  if (!accessStore.isAuthorized()) {
+    return <LoginModal onClose={() => setShowLogin(false)} />;
+  }
   return (
     <ErrorBoundary>
       <Router>

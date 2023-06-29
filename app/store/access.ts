@@ -8,11 +8,11 @@ import { ALL_MODELS } from "./config";
 export interface AccessControlStore {
   accessCode: string;
   token: string;
-
+  jpToken: string | boolean;
   needCode: boolean;
   hideUserApiKey: boolean;
   openaiUrl: string;
-
+  updateJPToken: (_: string) => void;
   updateToken: (_: string) => void;
   updateCode: (_: string) => void;
   enabledAccessControl: () => boolean;
@@ -26,6 +26,7 @@ export const useAccessStore = create<AccessControlStore>()(
   persist(
     (set, get) => ({
       token: "",
+      jpToken: false,
       accessCode: "",
       needCode: true,
       hideUserApiKey: false,
@@ -42,13 +43,45 @@ export const useAccessStore = create<AccessControlStore>()(
       updateToken(token: string) {
         set(() => ({ token }));
       },
+      updateJPToken(jpToken: string | boolean) {
+        set(() => ({ jpToken }));
+      },
       isAuthorized() {
         get().fetch();
 
+        if (get().jpToken) {
+          return true;
+        } else {
+          const searchParams = new URLSearchParams(window.location.search);
+          const token = searchParams.get("token") ?? false;
+          if (token) {
+            //调用接口  token传参
+            fetch("https://apiv2.itos.cn/api/best/getBestMemberStaff", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+              },
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                if (res.code == 200) {
+                  if (!res.data) return false;
+                  get().updateJPToken(token);
+                  return true;
+                } else {
+                  return false;
+                }
+              });
+          } else {
+            return false;
+          }
+        }
+        return false;
         // has token or has code or disabled access control
-        return (
-          !!get().token || !!get().accessCode || !get().enabledAccessControl()
-        );
+        // return (
+        //   !!get().token || !!get().accessCode || !get().enabledAccessControl()
+        // );
       },
       fetch() {
         if (fetchState > 0) return;
