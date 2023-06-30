@@ -5,6 +5,7 @@ import { getHeaders } from "../client/api";
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
 import { getServerSideConfig } from "../config/server";
+import { resolve } from "path";
 export interface AccessControlStore {
   accessCode: string;
   token: string;
@@ -12,16 +13,41 @@ export interface AccessControlStore {
   needCode: boolean;
   hideUserApiKey: boolean;
   openaiUrl: string;
+  fetchBoolean: boolean;
   updateJPToken: (_: string) => void;
   updateToken: (_: string) => void;
   updateCode: (_: string) => void;
+  updateFetchBoolean: (_: boolean) => void;
   enabledAccessControl: () => boolean;
   isAuthorized: () => boolean;
   fetch: () => void;
+  result: () => void;
 }
 
-let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
-
+let fetchState = 0;
+let fetchStateTwo = 0;
+async function fetchFuncion(url: string, token: string) {
+  if (fetchStateTwo > 0) return;
+  fetchStateTwo = 1;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    })
+    .catch((res) => {
+      return res;
+    })
+    .finally(() => {
+      fetchStateTwo = 2;
+      return;
+    });
+}
 const serverConfig = getServerSideConfig();
 export const useAccessStore = create<AccessControlStore>()(
   persist(
@@ -31,6 +57,7 @@ export const useAccessStore = create<AccessControlStore>()(
       accessCode: "",
       needCode: true,
       hideUserApiKey: false,
+      fetchBoolean: false,
       openaiUrl: "/api/openai/",
 
       enabledAccessControl() {
@@ -47,46 +74,39 @@ export const useAccessStore = create<AccessControlStore>()(
       updateJPToken(jpToken: string | boolean) {
         set(() => ({ jpToken }));
       },
+      updateFetchBoolean(fetchBoolean: boolean) {
+        set(() => ({ fetchBoolean }));
+      },
       isAuthorized() {
         get().fetch();
-
-        if (get().jpToken) {
-          return true;
-        } else {
-          const searchParams = new URLSearchParams(window.location.search);
-          const token = searchParams.get("token") ?? false;
-          if (token) {
-            //调用接口  token传参
-            fetch(
-              serverConfig.appUrl ??
-                process.env.appUrl + "/api/best/getBestMemberStaff",
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: token,
-                },
-              },
-            )
-              .then((res) => res.json())
-              .then((res) => {
-                if (res.code == 200) {
-                  if (!res.data) return false;
-                  get().updateJPToken(token);
-                  return true;
-                } else {
-                  return false;
-                }
-              });
-          } else {
-            return false;
-          }
-        }
-        return false;
+        get().result();
+        return get().fetchBoolean;
         // has token or has code or disabled access control
         // return (
         //   !!get().token || !!get().accessCode || !get().enabledAccessControl()
         // );
+      },
+      async result() {
+        if (fetchStateTwo > 0) return;
+        const searchParams = new URLSearchParams(window.location.search);
+        const token = get().jpToken ?? searchParams.get("token");
+        const url =
+          serverConfig.appUrl ??
+          process.env.appUrl +
+            "/api/best/getBestMemberStaff" +
+            (get().accessCode ? "?code=" + get().accessCode : "");
+        if (token) {
+          //调用接口  token传参
+          const result = await fetchFuncion(url, token);
+
+          if (result?.code == 200) {
+            get().updateFetchBoolean(true);
+            get().updateJPToken(token);
+            return;
+          }
+        }
+        get().updateFetchBoolean(false);
+        return;
       },
       fetch() {
         if (fetchState > 0) return;
