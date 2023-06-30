@@ -293,7 +293,7 @@ export const useChatStore = create<ChatStore>()(
             if (message) {
               botMessage.content = message;
               // 发送 AJAX 请求
-              fetch("https://apiv2.itos.cn/api/basic/chatgpt", {
+              fetch(process.env.appUrl + "/api/basic/chatgpt", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

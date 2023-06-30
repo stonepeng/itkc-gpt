@@ -39,6 +39,9 @@ const nextConfig = {
     return config;
   },
   output: "standalone",
+  env: {
+    appUrl: process.env.APP_URL,
+  },
 };
 
 export default nextConfig;

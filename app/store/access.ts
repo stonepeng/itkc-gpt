@@ -56,7 +56,7 @@ export const useAccessStore = create<AccessControlStore>()(
           const token = searchParams.get("token") ?? false;
           if (token) {
             //调用接口  token传参
-            fetch("https://apiv2.itos.cn/api/best/getBestMemberStaff", {
+            fetch(process.env.appUrl + "/api/best/getBestMemberStaff", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
