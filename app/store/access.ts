@@ -4,7 +4,7 @@ import { StoreKey } from "../constant";
 import { getHeaders } from "../client/api";
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
-
+import { getServerSideConfig } from "../config/server";
 export interface AccessControlStore {
   accessCode: string;
   token: string;
@@ -22,6 +22,7 @@ export interface AccessControlStore {
 
 let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
 
+const serverConfig = getServerSideConfig();
 export const useAccessStore = create<AccessControlStore>()(
   persist(
     (set, get) => ({
@@ -56,13 +57,17 @@ export const useAccessStore = create<AccessControlStore>()(
           const token = searchParams.get("token") ?? false;
           if (token) {
             //调用接口  token传参
-            fetch(process.env.appUrl + "/api/best/getBestMemberStaff", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
+            fetch(
+              serverConfig.appUrl ??
+                process.env.appUrl + "/api/best/getBestMemberStaff",
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: token,
+                },
               },
-            })
+            )
               .then((res) => res.json())
               .then((res) => {
                 if (res.code == 200) {

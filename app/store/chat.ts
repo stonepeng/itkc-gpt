@@ -11,7 +11,7 @@ import { StoreKey } from "../constant";
 import { api, RequestMessage } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
-
+import { getServerSideConfig } from "../config/server";
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -104,7 +104,7 @@ interface ChatStore {
 function countMessages(msgs: ChatMessage[]) {
   return msgs.reduce((pre, cur) => pre + cur.content.length, 0);
 }
-
+const serverConfig = getServerSideConfig();
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
@@ -293,18 +293,22 @@ export const useChatStore = create<ChatStore>()(
             if (message) {
               botMessage.content = message;
               // 发送 AJAX 请求
-              fetch(process.env.appUrl + "/api/basic/chatgpt", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
+              fetch(
+                serverConfig.appUrl ??
+                  process.env.appUrl + "/api/basic/chatgpt",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    message: message,
+                    input: content,
+                    code: JSON.parse(localStorage.getItem("access-control")!)
+                      .state.accessCode,
+                  }),
                 },
-                body: JSON.stringify({
-                  message: message,
-                  input: content,
-                  code: JSON.parse(localStorage.getItem("access-control")!)
-                    .state.accessCode,
-                }),
-              }).then(() => {});
+              ).then(() => {});
               get().onNewMessage(botMessage);
             }
             ChatControllerPool.remove(
