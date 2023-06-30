@@ -36,6 +36,12 @@ const tr: LocaleType = {
       SaveAs: "Save as Mask",
     },
   },
+  Login: {
+    Title: "登录",
+    Mobile: "手机号",
+    Password: "密码",
+    SubTitle: "请输入有效的手机号码",
+  },
   Export: {
     Title: "Tüm Mesajlar",
     Copy: "Tümünü Kopyala",

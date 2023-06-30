@@ -36,6 +36,12 @@ const de: LocaleType = {
       SaveAs: "Save as Mask",
     },
   },
+  Login: {
+    Title: "Login",
+    Mobile: "Mobiltelefonnummer",
+    Password: "Passwort",
+    SubTitle: "Bitte geben Sie eine gültige Telefonnummer ein",
+  },
   Export: {
     Title: "Alle Nachrichten",
     Copy: "Alles kopieren",

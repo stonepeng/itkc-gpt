@@ -36,6 +36,12 @@ const en: RequiredLocaleType = {
       SaveAs: "Save as Mask",
     },
   },
+  Login: {
+    Title: "Log on",
+    Mobile: "cell-phone number",
+    Password: "password",
+    SubTitle: "Please enter a valid phone number",
+  },
   Export: {
     Title: "Export Messages",
     Copy: "Copy All",

@@ -36,6 +36,12 @@ const cs: LocaleType = {
       SaveAs: "Uložit jako Masku",
     },
   },
+  Login: {
+    Title: "Přihlášení",
+    Mobile: "Číslo mobilního telefonu",
+    Password: "heslo",
+    SubTitle: "Zadejte prosím platné telefonní číslo",
+  },
   Export: {
     Title: "Všechny zprávy",
     Copy: "Kopírovat vše",

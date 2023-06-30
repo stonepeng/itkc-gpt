@@ -35,6 +35,12 @@ const tw: LocaleType = {
       SaveAs: "另存为面具",
     },
   },
+  Login: {
+    Title: "登录",
+    Mobile: "手机号",
+    Password: "密码",
+    SubTitle: "请输入有效的手机号码",
+  },
   Export: {
     Title: "將聊天記錄匯出為 Markdown",
     Copy: "複製全部",

@@ -36,6 +36,12 @@ const ko: LocaleType = {
       SaveAs: "마스크로 저장",
     },
   },
+  Login: {
+    Title: "登录",
+    Mobile: "手机号",
+    Password: "密码",
+    SubTitle: "请输入有效的手机号码",
+  },
   Export: {
     Title: "모든 메시지",
     Copy: "모두 복사",
