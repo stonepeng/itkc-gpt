@@ -1,16 +1,46 @@
 import Locale from "../locales";
 import styles from "./settings.module.scss";
 
-import { Input, List, ListItem, Modal } from "./ui-lib";
+import { Input, List, ListItem, Modal, showToast } from "./ui-lib";
 import { IconButton } from "./button";
 import { useState } from "react";
 import { useAccessStore } from "../store";
+import { getServerSideConfig } from "../config/server";
+
 export function LoginModal(props: { onClose: () => void }) {
   const [userInput, setUserInput] = useState("");
   const accessStore = useAccessStore();
+  const serverConfig = getServerSideConfig();
   const doLogin = (mobile: string) => {
     //手机号验证接口调用
     // accessStore.updateJPToken(mobile);
+    fetch(
+      serverConfig.appUrl ?? process.env.appUrl + "/api/best/toMobileAuth",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone: mobile,
+        }),
+      },
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        if (result?.code == 200) {
+          if (result.data.token) {
+            accessStore.updateJPToken(result.data.token); //更新token
+            showToast("登录成功");
+          }
+        } else {
+          showToast("登录失败");
+        }
+        return;
+      })
+      .catch(() => {
+        showToast("登录失败");
+      });
   };
   return (
     <div className="modal-mask">

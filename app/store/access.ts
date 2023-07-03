@@ -6,6 +6,7 @@ import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
 import { getServerSideConfig } from "../config/server";
 import { resolve } from "path";
+import { showToast } from "../components/ui-lib";
 export interface AccessControlStore {
   accessCode: string;
   token: string;
@@ -26,7 +27,7 @@ export interface AccessControlStore {
 
 let fetchState = 0;
 let fetchStateTwo = 0;
-async function fetchFuncion(url: string, token: any) {
+export async function fetchFuncion(url: string, token: any) {
   if (fetchStateTwo > 0) return;
   fetchStateTwo = 1;
   return fetch(url, {
@@ -107,6 +108,8 @@ export const useAccessStore = create<AccessControlStore>()(
         }
         if (get().fetchBoolean) {
           get().updateFetchBoolean(false);
+        } else {
+          showToast("无访问权限");
         }
         return;
       },
