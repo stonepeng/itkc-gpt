@@ -26,7 +26,7 @@ export interface AccessControlStore {
 
 let fetchState = 0;
 let fetchStateTwo = 0;
-async function fetchFuncion(url: string, token: string) {
+async function fetchFuncion(url: string, token: string | boolean) {
   if (fetchStateTwo > 0) return;
   fetchStateTwo = 1;
   return fetch(url, {
