@@ -14,7 +14,7 @@ export interface AccessControlStore {
   hideUserApiKey: boolean;
   openaiUrl: string;
   fetchBoolean: boolean;
-  updateJPToken: (_: string) => void;
+  updateJPToken: (_: string | boolean) => void;
   updateToken: (_: string) => void;
   updateCode: (_: string) => void;
   updateFetchBoolean: (_: boolean) => void;
@@ -26,7 +26,7 @@ export interface AccessControlStore {
 
 let fetchState = 0;
 let fetchStateTwo = 0;
-async function fetchFuncion(url: string, token: string | boolean) {
+async function fetchFuncion(url: string, token: any) {
   if (fetchStateTwo > 0) return;
   fetchStateTwo = 1;
   return fetch(url, {
