@@ -15,7 +15,7 @@ export interface AccessControlStore {
   hideUserApiKey: boolean;
   openaiUrl: string;
   fetchBoolean: boolean;
-  updateJPToken: (_: string | boolean) => void;
+  updateJPToken: (_: any) => void;
   updateToken: (_: string) => void;
   updateCode: (_: string) => void;
   updateFetchBoolean: (_: boolean) => void;
