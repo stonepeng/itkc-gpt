@@ -30,12 +30,17 @@ let fetchStateTwo = 0;
 export async function fetchFuncion(url: string, token: any) {
   if (fetchStateTwo > 0) return;
   fetchStateTwo = 1;
+  const validString = (x: string) => x && x.length > 0;
+
+  let headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (validString(token)) {
+    headers.Authorization = token;
+  }
   return fetch(url, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
+    headers,
   })
     .then((res) => res.json())
     .then((res) => {
@@ -79,6 +84,7 @@ export const useAccessStore = create<AccessControlStore>()(
         set(() => ({ fetchBoolean }));
       },
       isAuthorized() {
+        console.log(console.log(get().accessCode));
         get().fetch();
         get().result();
         return get().fetchBoolean;
@@ -96,7 +102,8 @@ export const useAccessStore = create<AccessControlStore>()(
           process.env.appUrl +
             "/api/best/getBestMemberStaff" +
             (get().accessCode ? "?code=" + get().accessCode : "");
-        if (token) {
+
+        if (token || get().accessCode) {
           //调用接口  token传参
           const result = await fetchFuncion(url, token);
 
