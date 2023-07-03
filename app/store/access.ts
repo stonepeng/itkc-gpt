@@ -89,7 +89,7 @@ export const useAccessStore = create<AccessControlStore>()(
       async result() {
         if (fetchStateTwo > 0) return;
         const searchParams = new URLSearchParams(window.location.search);
-        const token = get().jpToken ?? searchParams.get("token");
+        const token = get().jpToken ? get().jpToken : searchParams.get("token");
         const url =
           serverConfig.appUrl ??
           process.env.appUrl +
@@ -105,7 +105,9 @@ export const useAccessStore = create<AccessControlStore>()(
             return;
           }
         }
-        get().updateFetchBoolean(false);
+        if (get().fetchBoolean) {
+          get().updateFetchBoolean(false);
+        }
         return;
       },
       fetch() {
