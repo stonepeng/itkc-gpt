@@ -31,6 +31,7 @@ export function LoginModal(props: { onClose: () => void }) {
           if (result.data.token) {
             accessStore.updateJPToken(result.data.token); //更新token
             showToast("登录成功");
+            window.location.reload();
           }
         } else {
           showToast("登录失败，请注册好玩会员");
