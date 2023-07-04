@@ -116,7 +116,7 @@ export const useAccessStore = create<AccessControlStore>()(
         if (get().fetchBoolean) {
           get().updateFetchBoolean(false);
         } else {
-          showToast("无访问权限");
+          showToast("暂时无访问权限");
         }
         return;
       },

@@ -11,6 +11,7 @@ const DANGER_CONFIG = {
   hideUserApiKey: serverConfig.hideUserApiKey,
   enableGPT4: serverConfig.enableGPT4,
   appUrl: serverConfig.appUrl,
+  webUrl: serverConfig.webUrl,
 };
 
 declare global {

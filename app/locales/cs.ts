@@ -41,6 +41,7 @@ const cs: LocaleType = {
     Mobile: "Číslo mobilního telefonu",
     Password: "heslo",
     SubTitle: "Zadejte prosím platné telefonní číslo",
+    Member: "注册好玩会员",
   },
   Export: {
     Title: "Všechny zprávy",

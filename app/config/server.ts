@@ -11,6 +11,7 @@ declare global {
       HIDE_USER_API_KEY?: string; // disable user's api key input
       DISABLE_GPT4?: string; // allow user to use gpt-4 or not
       APP_URL?: string;
+      WEB_URL?: string;
     }
   }
 }
@@ -46,5 +47,6 @@ export const getServerSideConfig = () => {
     hideUserApiKey: !!process.env.HIDE_USER_API_KEY,
     enableGPT4: !process.env.DISABLE_GPT4,
     appUrl: process.env.APP_URL,
+    webUrl: process.env.WEB_URL,
   };
 };

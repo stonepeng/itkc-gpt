@@ -40,6 +40,7 @@ const cn = {
     Mobile: "手机号",
     Password: "密码",
     SubTitle: "请输入有效的手机号码",
+    Member: "注册好玩会员",
   },
   Export: {
     Title: "分享聊天记录",

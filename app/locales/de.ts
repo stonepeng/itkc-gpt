@@ -41,6 +41,7 @@ const de: LocaleType = {
     Mobile: "Mobiltelefonnummer",
     Password: "Passwort",
     SubTitle: "Bitte geben Sie eine gültige Telefonnummer ein",
+    Member: "注册好玩会员",
   },
   Export: {
     Title: "Alle Nachrichten",

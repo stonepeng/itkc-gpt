@@ -41,6 +41,7 @@ const en: RequiredLocaleType = {
     Mobile: "cell-phone number",
     Password: "password",
     SubTitle: "Please enter a valid phone number",
+    Member: "注册好玩会员",
   },
   Export: {
     Title: "Export Messages",

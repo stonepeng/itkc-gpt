@@ -11,9 +11,8 @@ export function LoginModal(props: { onClose: () => void }) {
   const [userInput, setUserInput] = useState("");
   const accessStore = useAccessStore();
   const serverConfig = getServerSideConfig();
+
   const doLogin = (mobile: string) => {
-    //手机号验证接口调用
-    // accessStore.updateJPToken(mobile);
     fetch(
       serverConfig.appUrl ?? process.env.appUrl + "/api/best/toMobileAuth",
       {
@@ -48,6 +47,16 @@ export function LoginModal(props: { onClose: () => void }) {
         title={Locale.Login.Title}
         onClose={props.onClose}
         actions={[
+          <IconButton
+            key="reset"
+            bordered
+            text={Locale.Login.Member}
+            onClick={() => {
+              window.location.href =
+                serverConfig.webUrl ??
+                process.env.webUrl + "/fun-demand-home-i";
+            }}
+          />,
           <IconButton
             key="reset"
             bordered

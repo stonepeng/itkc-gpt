@@ -41,6 +41,7 @@ const nextConfig = {
   output: "standalone",
   env: {
     appUrl: process.env.APP_URL,
+    webUrl: process.env.WEB_URL,
   },
 };
 
