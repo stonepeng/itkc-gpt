@@ -29,9 +29,8 @@ export function LoginModal(props: { onClose: () => void }) {
       .then((result) => {
         if (result?.code == 200) {
           if (result.data.token) {
-            accessStore.updateJPToken(result.data.token); //更新token
             showToast("登录成功");
-            window.location.reload();
+            accessStore.updateJPToken(result.data.token); //更新token
           }
         } else {
           showToast("登录失败，请注册好玩会员");

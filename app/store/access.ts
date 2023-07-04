@@ -79,6 +79,12 @@ export const useAccessStore = create<AccessControlStore>()(
       },
       updateJPToken(jpToken: string | boolean) {
         set(() => ({ jpToken }));
+        //更新token后 刷新页面
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("token")) {
+          // 刷新页面并清除参数
+          window.location.href = window.location.pathname;
+        }
       },
       updateFetchBoolean(fetchBoolean: boolean) {
         set(() => ({ fetchBoolean }));
