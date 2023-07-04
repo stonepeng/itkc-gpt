@@ -33,12 +33,12 @@ export function LoginModal(props: { onClose: () => void }) {
             showToast("登录成功");
           }
         } else {
-          showToast("登录失败");
+          showToast("登录失败，请注册好玩会员");
         }
         return;
       })
       .catch(() => {
-        showToast("登录失败");
+        showToast("登录失败，请注册好玩会员");
       });
   };
   return (
