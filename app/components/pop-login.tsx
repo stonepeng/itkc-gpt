@@ -54,7 +54,7 @@ export function LoginModal(props: { onClose: () => void }) {
             onClick={() => {
               window.location.href =
                 serverConfig.webUrl ??
-                process.env.webUrl + "/fun-demand-home-i";
+                process.env.webUrl + "/fun-demand-member?source=gpt";
             }}
           />,
           <IconButton
