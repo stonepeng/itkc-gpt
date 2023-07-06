@@ -83,7 +83,6 @@ export function UseFeedbackModal(props: { onClose: () => void }) {
           <List>
             <ListItem title="反馈类型">
               <Select
-                value={props.type}
                 onChange={(e) =>
                   updateFeeedback(
                     (feeedback) => (feeedback.type = e.currentTarget.value),
@@ -100,7 +99,6 @@ export function UseFeedbackModal(props: { onClose: () => void }) {
             <ListItem title="请描述具体问题" className={styles["feedback"]}>
               <Input
                 style={{ height: "100px" }}
-                value={props.question}
                 onInput={(e) =>
                   updateFeeedback(
                     (feeedback) => (feeedback.question = e.currentTarget.value),
@@ -111,7 +109,6 @@ export function UseFeedbackModal(props: { onClose: () => void }) {
             <ListItem title="联系方式" subTitle="选填，便于我们与你联系">
               <input
                 type="text"
-                value={props.phone}
                 onInput={(e) =>
                   updateFeeedback(
                     (feeedback) => (feeedback.phone = e.currentTarget.value),
