@@ -2,7 +2,10 @@
   padding: 20px;
   overflow: auto;
 }
-
+.feedback{
+  flex-direction: column;
+  align-items: stretch
+}
 .avatar {
   cursor: pointer;
 }

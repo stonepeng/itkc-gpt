@@ -10,7 +10,7 @@ import { showToast } from "../components/ui-lib";
 export interface AccessControlStore {
   accessCode: string;
   token: string;
-  jpToken: string | boolean;
+  jpToken: any;
   needCode: boolean;
   hideUserApiKey: boolean;
   openaiUrl: string;

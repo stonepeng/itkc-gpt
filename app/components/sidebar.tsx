@@ -5,14 +5,15 @@ import styles from "./home.module.scss";
 import { IconButton } from "./button";
 import SettingsIcon from "../icons/settings.svg";
 import GithubIcon from "../icons/github.svg";
+import FeedbackIcon from "../icons/feedback.svg";
 import ChatGptIcon from "../icons/chatgpt.svg";
 import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import PluginIcon from "../icons/plugin.svg";
-
+import { useState } from "react";
 import Locale from "../locales";
-
+import { UseFeedbackModal } from "./use-feedback";
 import { useAppConfig, useChatStore } from "../store";
 
 import {
@@ -107,6 +108,7 @@ export function SideBar(props: { className?: string }) {
 
   // drag side bar
   const { onDragMouseDown, shouldNarrow } = useDragSideBar();
+  const [showFeedback, setShowFeedback] = useState(false);
   const navigate = useNavigate();
   const config = useAppConfig();
 
@@ -168,6 +170,16 @@ export function SideBar(props: { className?: string }) {
               }}
             />
           </div>
+          <div className={styles["sidebar-action"]}>
+            <IconButton
+              icon={<FeedbackIcon />}
+              text="意见反馈"
+              onClick={() => {
+                setShowFeedback(true);
+              }}
+              shadow
+            />
+          </div>
           {/* <div className={styles["sidebar-action"]}>
             <Link to={Path.Settings}>
               <IconButton icon={<SettingsIcon />} shadow />
@@ -200,6 +212,9 @@ export function SideBar(props: { className?: string }) {
         className={styles["sidebar-drag"]}
         onMouseDown={(e) => onDragMouseDown(e as any)}
       ></div>
+      {showFeedback && (
+        <UseFeedbackModal onClose={() => setShowFeedback(false)} />
+      )}
     </div>
   );
 }

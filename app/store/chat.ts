@@ -12,6 +12,7 @@ import { api, RequestMessage } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { getServerSideConfig } from "../config/server";
+import { useAccessStore } from "../store";
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -269,7 +270,6 @@ export const useChatStore = create<ChatStore>()(
         );
         const sessionIndex = get().currentSessionIndex;
         const messageIndex = get().currentSession().messages.length + 1;
-
         // save user's and bot's message
         get().updateCurrentSession((session) => {
           session.messages.push(userMessage);
@@ -292,15 +292,23 @@ export const useChatStore = create<ChatStore>()(
             botMessage.streaming = false;
             if (message) {
               botMessage.content = message;
+              const validString = (x: string) => x && x.length > 0;
+
+              let headers: Record<string, string> = {
+                "Content-Type": "application/json",
+              };
+              let token = JSON.parse(localStorage.getItem("access-control")!)
+                .state.jpToken;
+              if (validString(token)) {
+                headers.Authorization = token;
+              }
               // 发送 AJAX 请求
               fetch(
                 serverConfig.appUrl ??
                   process.env.appUrl + "/api/basic/chatgpt",
                 {
                   method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
+                  headers,
                   body: JSON.stringify({
                     message: message,
                     input: content,
