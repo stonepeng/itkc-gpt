@@ -11,6 +11,7 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import PluginIcon from "../icons/plugin.svg";
+import ArrowIcon from "../icons/arrow.svg";
 import { useState } from "react";
 import Locale from "../locales";
 import { UseFeedbackModal } from "./use-feedback";
@@ -22,6 +23,7 @@ import {
   NARROW_SIDEBAR_WIDTH,
   Path,
   REPO_URL,
+  JPZS_URL,
 } from "../constant";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -157,7 +159,19 @@ export function SideBar(props: { className?: string }) {
       >
         <ChatList narrow={shouldNarrow} />
       </div>
-
+      <div className={styles["sidebar-tail-jpzs"]}>
+        <div className={styles["sidebar-actions"]}>
+          <div className={styles["sidebar-action"]}>
+            <a
+              href={JPZS_URL}
+              target="_blank"
+              className={styles["sidebar-aher"]}
+            >
+              <IconButton text="精品中山" icon={<ArrowIcon />} shadow />
+            </a>
+          </div>
+        </div>
+      </div>
       <div className={styles["sidebar-tail"]}>
         <div className={styles["sidebar-actions"]}>
           <div className={styles["sidebar-action"] + " " + styles.mobile}>
@@ -191,6 +205,7 @@ export function SideBar(props: { className?: string }) {
             </a>
           </div> */}
         </div>
+
         <div>
           <IconButton
             icon={<AddIcon />}
