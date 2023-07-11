@@ -7,8 +7,8 @@ import { getBuildConfig } from "./config/build";
 const buildConfig = getBuildConfig();
 
 export const metadata = {
-  title: "精品中山-ChatGPT",
-  description: "Your personal ChatGPT Chat Bot.",
+  title: "精品中山-AiGPT",
+  description: "Your personal AiGPT Chat Bot.",
   viewport: {
     width: "device-width",
     initialScale: 1,
@@ -19,7 +19,7 @@ export const metadata = {
     { media: "(prefers-color-scheme: dark)", color: "#151515" },
   ],
   appleWebApp: {
-    title: "精品中山-ChatGPT",
+    title: "精品中山-AiGPT",
     statusBarStyle: "default",
   },
 };
