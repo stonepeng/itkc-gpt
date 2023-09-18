@@ -3,7 +3,7 @@
 
 <h1 align="center">ChatGPT Next Web</h1>
 
-English / [简体中文](./README_CN.md)
+English / [简体中文](./README_CN.md) test
 
 One-Click to deploy well-designed ChatGPT web UI on Vercel.
 
