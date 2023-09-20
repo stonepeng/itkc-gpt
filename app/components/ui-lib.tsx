@@ -4,10 +4,14 @@ import CloseIcon from "../icons/close.svg";
 import EyeIcon from "../icons/eye.svg";
 import EyeOffIcon from "../icons/eye-off.svg";
 import DownIcon from "../icons/down.svg";
-
+import ChangeIcon from "../icons/change.svg";
+import { useNavigate } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import React, { HTMLProps, useEffect, useState } from "react";
 import { IconButton } from "./button";
+import { Path } from "../constant";
+import { Mask } from "../store/mask";
+import { Avatar } from "./emoji";
 
 export function Popover(props: {
   children: JSX.Element;
@@ -259,6 +263,93 @@ export function Select(
         {children}
       </select>
       <DownIcon className={styles["select-with-icon-icon"]} />
+    </div>
+  );
+}
+
+export function ChatTitle(props: { mask: any; onInput: any; chatStore: any }) {
+  const navigate = useNavigate();
+  return (
+    <div>
+      <div className={styles["c89MfFNq"]}>
+        <h1>你好，我是精品中山AiGPT</h1>
+        <span>
+          作为你的智能伙伴，我既能写文案、想点子，又能陪你聊天、答疑解惑。
+          <br />
+          想知道我还能做什么？
+          <span
+            className={styles["wxGuideLink"]}
+            onClick={() => navigate(Path.Masks, { state: { fromHome: true } })}
+          >
+            点这里快速上手！
+          </span>
+          想学习如何提问？
+        </span>
+      </div>
+      {
+        <MaskFour
+          maskStore={props.mask}
+          onInput={props.onInput}
+          chatStore={props.chatStore}
+        />
+      }
+    </div>
+  );
+}
+
+export function MaskFour(props: {
+  maskStore: any;
+  onInput: any;
+  chatStore: any;
+}) {
+  const maskStore = props.maskStore;
+  const [masks, setMasks] = useState([]);
+
+  const handleGetNewMasks = () => {
+    const allMasks = maskStore.getRandom();
+    setMasks(allMasks);
+  };
+  const handleGetInput = (m: Mask) => {
+    if (m.context.length > 1) {
+      //创建新的对话
+      props.chatStore.newSession(m);
+      props.onInput("");
+    } else if (m.context.length == 1) {
+      props.onInput(m.context[0].content);
+    }
+  };
+
+  useEffect(() => {
+    const allMasks = maskStore.getRandom();
+    setMasks(allMasks);
+  }, []); // 空数组作为依赖，确保只在组件挂载时执行一次
+
+  return (
+    <div className={styles["axhDQbOF"]}>
+      <div className={styles["H9PYlJLx"]}>
+        <span>你可以试着问我：</span>
+        <span className={styles["GIDRg7DJ"]} onClick={handleGetNewMasks}>
+          <ChangeIcon className={styles["f8w1zhFb"]} />
+          <span>换一换</span>
+        </span>
+      </div>
+      <div className={styles["Koj928DV"]}>
+        {masks.map((m: Mask) => (
+          <div className={styles["DaMRbhJA"]} key={m.id}>
+            <div
+              className={styles["fx01Ddb0"]}
+              onClick={() => handleGetInput(m)}
+            >
+              <div className={styles["dpAX6ame"]}>
+                <span className={styles["z1eOqy5G"]}>
+                  <Avatar avatar={m.avatar} />
+                </span>
+                <span className={styles["zGZXs_hq"]}>{m.name}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

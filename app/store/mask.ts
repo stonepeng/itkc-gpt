@@ -31,6 +31,7 @@ type MaskStore = MaskState & {
   search: (text: string) => Mask[];
   get: (id?: number) => Mask | null;
   getAll: () => Mask[];
+  getRandom: () => Mask[];
 };
 
 export const DEFAULT_MASK_ID = 1145141919810;
@@ -93,6 +94,16 @@ export const useMaskStore = create<MaskStore>()(
       },
       search(text) {
         return Object.values(get().masks);
+      },
+      getRandom() {
+        const userMasks = Object.values(get().masks)
+          .sort((a, b) => b.id - a.id)
+          .concat(BUILTIN_MASKS);
+        for (let i = userMasks.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [userMasks[i], userMasks[j]] = [userMasks[j], userMasks[i]];
+        }
+        return userMasks.slice(0, 6);
       },
     }),
     {

@@ -52,7 +52,7 @@ import { IconButton } from "./button";
 import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
 
-import { ListItem, Modal } from "./ui-lib";
+import { ChatTitle, ListItem, Modal } from "./ui-lib";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
 import { Avatar } from "./emoji";
@@ -401,11 +401,10 @@ export function ChatActions(props: {
     </div>
   );
 }
-
 export function Chat() {
   type RenderMessage = ChatMessage & { preview?: boolean };
-
   const chatStore = useChatStore();
+  const maskStore = useMaskStore();
   const [session, sessionIndex] = useChatStore((state) => [
     state.currentSession(),
     state.currentSessionIndex,
@@ -604,13 +603,12 @@ export function Chat() {
     context.length === 0 &&
     session.messages.at(0)?.content !== BOT_HELLO.content
   ) {
-    const copiedHello = Object.assign({}, BOT_HELLO);
     if (!accessStore.isAuthorized()) {
+      const copiedHello = Object.assign({}, BOT_HELLO);
       copiedHello.content = Locale.Error.Unauthorized;
+      context.push(copiedHello);
     }
-    context.push(copiedHello);
   }
-
   // clear context index = context length + index in messages
   const clearContextIndex =
     (session.clearContextIndex ?? -1) >= 0
@@ -728,7 +726,6 @@ export function Chat() {
           setShowModal={setShowPromptModal}
         />
       </div>
-
       <div
         className={styles["chat-body"]}
         ref={scrollRef}
@@ -740,6 +737,20 @@ export function Chat() {
           setAutoScroll(false);
         }}
       >
+        <div className={styles["chat-message"]}>
+          <div className={styles["chat-message-container"]}>
+            <div className={styles["chat-message-avatar"]}>
+              <MaskAvatar mask={session.mask} />
+            </div>
+            <div className={styles["chat-message-item"]}>
+              <ChatTitle
+                mask={maskStore}
+                chatStore={chatStore}
+                onInput={onInput}
+              />
+            </div>
+          </div>
+        </div>
         {messages.map((message, i) => {
           const isUser = message.role === "user";
           const showActions =
