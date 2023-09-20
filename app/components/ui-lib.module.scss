@@ -1,5 +1,19 @@
 @import "../styles/animation.scss";
 
+@mixin light {
+  color-scheme: light;
+  --color-accent-fg: #0969da;
+  --color-fg-default: #24292f;
+  --color-canvas-default: transparent;
+}
+
+@mixin dark {
+  color-scheme: dark;
+  --color-accent-fg: #58a6ff;
+  --color-fg-default: #c9d1d9;
+  --color-canvas-default: transparent;
+
+}
 .card {
   background-color: var(--white);
   border-radius: 10px;
@@ -246,7 +260,8 @@
   margin-bottom: .1rem;
 }
 .c89MfFNq span {
-  color: #676c90;
+  color: var(--color-fg-default);
+  background-color: var(--color-canvas-default);
   font-family: PingFangSC-Regular;
   font-size: 14px;
   font-weight: 400;
@@ -268,7 +283,7 @@
 
 .H9PYlJLx{
   align-items: center;
-  color: #6d6790;
+  color: var(--color-fg-default);
   display: flex;
   font-size: 14px;
   justify-content: space-between;
@@ -283,7 +298,7 @@
 }
 .GIDRg7DJ{
   align-items: center;
-  color: #4955f5;
+  color: var(--color-accent-fg);
   cursor: pointer;
   display: flex;
 }
@@ -291,8 +306,8 @@
   background: #f6f8fd;
   border-radius: 6px;
   cursor: pointer;
-  margin-bottom: 8px;
-  padding: 16px;
+  margin-bottom: 4px;
+  padding: 6px;
   width: calc(40% - 4px);
 }
 .DaMRbhJA .fx01Ddb0 {
@@ -308,16 +323,13 @@
 .DaMRbhJA .dpAX6ame {
   align-items: center;
   display: flex;
-  margin-bottom: 6px;
 }
 
 .DaMRbhJA .dpAX6ame .zGZXs_hq {
 
-  font-size: 21px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 24px;
 }
 .DaMRbhJA:nth-of-type(odd) {
   margin-right: 8px;

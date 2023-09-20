@@ -103,7 +103,7 @@ export const useMaskStore = create<MaskStore>()(
           const j = Math.floor(Math.random() * (i + 1));
           [userMasks[i], userMasks[j]] = [userMasks[j], userMasks[i]];
         }
-        return userMasks.slice(0, 4);
+        return userMasks.slice(0, 6);
       },
     }),
     {
