@@ -303,22 +303,15 @@
   display: flex;
 }
 .DaMRbhJA {
+  margin: 4px;
   background: #f6f8fd;
   border-radius: 6px;
   cursor: pointer;
-  margin-bottom: 4px;
-  padding: 6px;
-  width: calc(40% - 4px);
+  padding: 4px;
+  width: calc(30% - 8px);
 }
-.DaMRbhJA .fx01Ddb0 {
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
+.DaMRbhJA {
   color: #676c90;
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: -o-ellipsis-lastline;
-  text-overflow: ellipsis;
 }
 .DaMRbhJA .dpAX6ame {
   align-items: center;
@@ -330,6 +323,9 @@
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .DaMRbhJA:nth-of-type(odd) {
   margin-right: 8px;
