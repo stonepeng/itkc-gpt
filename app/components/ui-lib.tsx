@@ -267,11 +267,7 @@ export function Select(
   );
 }
 
-export function ChatTitle(props: {
-  mask: MaskState;
-  onInput: any;
-  chatStore: any;
-}) {
+export function ChatTitle(props: { mask: any; onInput: any; chatStore: any }) {
   const navigate = useNavigate();
   return (
     <div>
