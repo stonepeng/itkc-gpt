@@ -272,7 +272,8 @@
 }
 .axhDQbOF .Koj928DV{
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .axhDQbOF{
     border-radius: 0 0 8px 8px;
@@ -307,8 +308,8 @@
   background: #f6f8fd;
   border-radius: 6px;
   cursor: pointer;
-  padding: 4px;
-  width: calc(30% - 8px);
+  padding: 8px;
+  width: calc(40% - 4px);
 }
 .DaMRbhJA {
   color: #676c90;
@@ -320,7 +321,7 @@
 
 .DaMRbhJA .dpAX6ame .zGZXs_hq {
 
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0;
   overflow: hidden;

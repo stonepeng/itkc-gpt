@@ -345,14 +345,14 @@ export function ChatActions(props: {
           <BottomIcon />
         </div>
       )}
-      {props.hitBottom && (
+      {/* {props.hitBottom && (
         <div
           className={`${chatStyle["chat-input-action"]} clickable`}
           onClick={props.showPromptModal}
         >
           <SettingsIcon />
         </div>
-      )}
+      )} */}
 
       <div
         className={`${chatStyle["chat-input-action"]} clickable`}
