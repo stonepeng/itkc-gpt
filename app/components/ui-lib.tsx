@@ -10,7 +10,7 @@ import { createRoot } from "react-dom/client";
 import React, { HTMLProps, useEffect, useState } from "react";
 import { IconButton } from "./button";
 import { Path } from "../constant";
-import { Mask, MaskStore } from "../store/mask";
+import { Mask } from "../store/mask";
 import { Avatar } from "./emoji";
 
 export function Popover(props: {
@@ -268,7 +268,7 @@ export function Select(
 }
 
 export function ChatTitle(props: {
-  mask: MaskStore;
+  mask: MaskState;
   onInput: any;
   chatStore: any;
 }) {
@@ -302,7 +302,7 @@ export function ChatTitle(props: {
 }
 
 export function MaskFour(props: {
-  maskStore: MaskStore;
+  maskStore: any;
   onInput: any;
   chatStore: any;
 }) {
